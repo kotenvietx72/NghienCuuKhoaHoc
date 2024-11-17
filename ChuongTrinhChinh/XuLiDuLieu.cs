@@ -26,5 +26,6 @@ namespace ChuongTrinhChinh
         /// Hàm tính best time để đưa ra lộ trình các đợt
         /// </summary>
         public static void NhanhCan() { }
+        // Xin chào 
     }
 }
