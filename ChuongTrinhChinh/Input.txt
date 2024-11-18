@@ -1,0 +1,17 @@
+Đại số tuyến tính					DHTD18A2HN	5->6	70	H.A10-301
+Hóa học								DHTD18A1HN	5->6	72	H.A10-1011
+Kinh tế vi mô 						DHMK18A2HN	5->6	70	H.A8-305
+Kinh tế vi mô 						DHTM18A1CL	5->6	35	H.A10-1207
+Kỹ thuật điện tử					DHDT18A1CL	4->6	35	H.A10-1109
+Lịch sử các học thuyết kinh tế		DHMK18A3HN	5->6	70	H.A8-307
+Nhập môn Cơ điện tử					DHCD18A3HN	4->6	65	H.A9-204
+Pháp luật đại cương					DHTD18A3HN	5->6	70	H.A10-1007
+Pháp luật đại cương					DHMK18A4HN	5->6	70	H.A8-308
+Quản trị học						DHLQ18A1HN	4->6	70	H.A8-408
+Tin học cơ sở cho KHDL				DHKL18A2HN	5->6	65	H.A10-406
+Toán giải tích						DHTI18A2HN	4->6	65	H.A9-202
+Toán giải tích						DHCD18A4HN	4->6	60	H.A9-206
+Triết học Mac - Lênin				DHQT18A1HN	4->6	70	H.A8-201
+Vật liệu may						DHMA18A3HN	4->6	50	H.A10-504
+Xác suất thống kê					DHQT18A1CL	4->6	35	H.A10-1208
+

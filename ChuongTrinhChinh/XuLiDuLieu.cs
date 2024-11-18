@@ -19,13 +19,11 @@ namespace ChuongTrinhChinh
         /// </summary>
         public static void TinhTGTrong() { }
         /// <summary>
-        /// Hàm thính thời gian xử lí mỗi đợt
+        /// Hàm tính thời gian xử lí mỗi đợt
         /// </summary>
         public static void TinhTGXuLiMoiDot() { }
         /// <summary>
         /// Hàm tính best time để đưa ra lộ trình các đợt
         /// </summary>
-        public static void NhanhCan() { }
-        // Xin chào 
-    }
+        public static void NhanhCan() { }    }
 }
