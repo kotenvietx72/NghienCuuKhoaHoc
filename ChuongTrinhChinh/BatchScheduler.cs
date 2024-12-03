@@ -9,7 +9,7 @@ namespace ChuongTrinhChinh
     internal class BatchScheduler
     {
         public List<ClassRoom>? classrooms { get; set; }     // Danh sách các lớp 
-        public float ProcessingTime { get; set; }       // Thời gian xử lí
+        public float ProcessingTime { get; set; }            // Thời gian xử lí
 
         /// <summary>
         /// Hàm tính thời gian trống (Nếu có) của mỗi đợt
