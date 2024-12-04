@@ -93,21 +93,6 @@ namespace ChuongTrinhChinh
                 Console.WriteLine(ex.Message);
             }
         }
-        
-        /// <summary>
-        /// Hàm chia danh sách các lớp đầu vào vào danh sách các toà nhà học để xử lí
-        /// </summary>
-        /// <param name="classRooms"></param>
-        /// <param name="ClassHA8"></param>
-        /// <param name="ClassHA9"></param>
-        /// <param name="ClassHA10"></param>
-        // Done
-        public static void ChiaLopTheoToa(List<ClassRoom> classRooms, List<ClassRoom> ClassHA8, List<ClassRoom> ClassHA9, List<ClassRoom> ClassHA10)
-        {
-            ClassHA8 = classRooms.Where(lop => lop.Room?.Substring(2, 2) == "A8").ToList();
-            ClassHA9 = classRooms.Where(lop => lop.Room?.Substring(2, 2) == "A9").ToList();
-            ClassHA10 = classRooms.Where(lop => lop.Room?.Substring(2, 3) == "A10").ToList();
-        }
 
         /// <summary>
         /// Hàm kiểm tra lớp đã được xử lí chưa ?
@@ -123,10 +108,38 @@ namespace ChuongTrinhChinh
         }    
 
         /// <summary>
+        /// Hàm check danh sách lớp đã được xử lí hết chưa
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        // Done
+        public static bool CheckClassXuLi(List<ClassRoom> x)
+        {
+            foreach(ClassRoom r in x)
+                if(Check(r) == false) return false;  
+            return true;
+        }
+
+        /// <summary>
         /// Hàm chia các lớp thành các đợt
         /// </summary> 
-        public static void ChiaLop(List<BatchScheduler> a, List<ClassRoom> b, List<ClassRoom> ClassHA8, List<ClassRoom> ClassHA9, List<ClassRoom> ClassHA10) {
-              
+        public static void ChiaLop(List<BatchScheduler> a, List<ClassRoom> b) {
+            var classHA8 = b.Where(lop => lop.Room?.Substring(2, 2) == "A8" && Check(lop) == false).ToList();
+            var classHA9 = b.Where(lop => lop.Room?.Substring(2, 2) == "A9" && Check(lop) == false).ToList();
+            var classHA10 = b.Where(lop => lop.Room?.Substring(2, 3) == "A8" && Check(lop) == false).ToList();
+
+            if (classHA8.Any() && classHA9.Any() && classHA10.Any())
+                return;
+
+            int TongSiSo = 0; BatchScheduler DotHienTai = new BatchScheduler();
+            var checkHA8 = DotHienTai.classrooms.Any(lop => lop.Room?.Substring(2, 2) == "A8");
+            var checkHA9 = DotHienTai.classrooms.Any(lop => lop.Room?.Substring(2, 2) == "A9");
+            var checkHA10 = DotHienTai.classrooms.Any(lop => lop.Room?.Substring(2, 3) == "A10");
+
+            if(checkHA8 && checkHA9 && checkHA10)
+            {
+                
+            }    
         }
  
         /// <summary>
