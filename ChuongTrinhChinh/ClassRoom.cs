@@ -16,6 +16,15 @@ namespace ChuongTrinhChinh
         public string? Room {  get; set; }         // Phòng học
         public bool check {  get; set; }           // Đánh dấu đã được xử lí chưa
 
+        public ClassRoom()
+        { }
+        public ClassRoom(int StudentCount, string ClassName, bool check)
+        {
+            this.StudentCount = StudentCount;
+            this.ClassName = ClassName;
+            this.check = check;
+        }
+
         /// <summary>
         /// Hàm tính thời gian đi từ lớp tới cổng soát vé 
         /// </summary>

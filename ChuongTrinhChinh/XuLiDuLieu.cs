@@ -33,10 +33,6 @@ namespace ChuongTrinhChinh
                             a.Room = columns[4];
                             classRooms.Add(a);
                         }
-                        else
-                        {
-                            Console.WriteLine("Không đúng đầu vào dữ liệu");
-                        }
                     }
                 }
             }
@@ -123,23 +119,39 @@ namespace ChuongTrinhChinh
         /// <summary>
         /// Hàm chia các lớp thành các đợt
         /// </summary> 
-        public static void ChiaLop(List<BatchScheduler> a, List<ClassRoom> b) {
+        public static void ChiaDotNhanhCan(List<BatchScheduler> a, List<ClassRoom> b, int GioiHanMaxSinhVien, int GioiHanMinSinhVien)
+        {
             var classHA8 = b.Where(lop => lop.Room?.Substring(2, 2) == "A8" && Check(lop) == false).ToList();
             var classHA9 = b.Where(lop => lop.Room?.Substring(2, 2) == "A9" && Check(lop) == false).ToList();
-            var classHA10 = b.Where(lop => lop.Room?.Substring(2, 3) == "A8" && Check(lop) == false).ToList();
-
-            if (classHA8.Any() && classHA9.Any() && classHA10.Any())
-                return;
-
-            int TongSiSo = 0; BatchScheduler DotHienTai = new BatchScheduler();
-            var checkHA8 = DotHienTai.classrooms.Any(lop => lop.Room?.Substring(2, 2) == "A8");
-            var checkHA9 = DotHienTai.classrooms.Any(lop => lop.Room?.Substring(2, 2) == "A9");
-            var checkHA10 = DotHienTai.classrooms.Any(lop => lop.Room?.Substring(2, 3) == "A10");
-
-            if(checkHA8 && checkHA9 && checkHA10)
+            var classHA10 = b.Where(lop => lop.Room?.Substring(2, 3) == "A10" && Check(lop) == false).ToList();
+            List<BatchScheduler> test = new List<BatchScheduler>();
+            void TimDotHienTai(BatchScheduler DotHienTai, List<ClassRoom> LopConLai, int TongSiSo)
             {
-                
-            }    
+                var checkHA8 = DotHienTai.classrooms.Any(lop => lop.Room?.Substring(2, 2) == "A8") && classHA8.Count() > 0;
+                var checkHA9 = DotHienTai.classrooms.Any(lop => lop.Room?.Substring(2, 2) == "A9") && classHA9.Count() > 0;
+                var checkHA10 = DotHienTai.classrooms.Any(lop => lop.Room?.Substring(2, 3) == "A10") && classHA10.Count() > 0;
+
+                for (int i = 0; i < LopConLai.Count; i++)
+                {
+                    ClassRoom LopDuocChon = LopConLai[i];
+                    var LopMoiConLai = LopConLai.Skip(i + 1).ToList();
+
+                    DotHienTai.classrooms.Add(LopDuocChon);
+                    TimDotHienTai(DotHienTai, LopMoiConLai, TongSiSo + LopDuocChon.StudentCount);
+                    DotHienTai.classrooms.RemoveAt(DotHienTai.classrooms.Count - 1);
+                }
+
+                if (TongSiSo > GioiHanMaxSinhVien && TongSiSo < GioiHanMinSinhVien)
+                    return;
+
+                if(checkHA10 && checkHA9 && checkHA8 && TongSiSo < GioiHanMaxSinhVien && TongSiSo > GioiHanMinSinhVien)
+                { 
+                    DotHienTai.Count_Student_Max = TongSiSo;
+                    a.Add(DotHienTai.DeepCopy());
+                    return;
+                }    
+            }
+            TimDotHienTai(new BatchScheduler(), b, 0);
         }
  
         /// <summary>

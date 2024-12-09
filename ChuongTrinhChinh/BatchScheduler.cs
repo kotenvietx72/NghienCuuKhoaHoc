@@ -14,18 +14,24 @@ namespace ChuongTrinhChinh
         /// <summary>
         /// Hàm tính thời gian trống (Nếu có) của mỗi đợt
         /// </summary>
-        public float TinhTGTrong() {
-            float ThoiGianTrong = 0;
-            for (int i = 1; i < classrooms?.Count(); i++)
-            {
-                float ThoiGianXuLi = classrooms[0].TimeToGate();
-                for (int j = 0; j < i; j++)
-                    ThoiGianXuLi += classrooms[j].ExitTime();
-                if(ThoiGianXuLi < classrooms[i].ExitTime())
-                    ThoiGianTrong = classrooms[i].ExitTime() - ThoiGianXuLi;
-            }
-            return ThoiGianTrong;   
+        public float TinhTGTrong()
+        {
+            return 0;
         }
-
+        public BatchScheduler()
+        {
+            classrooms = new List<ClassRoom>();
+            ProcessingTime = 0;
+            Count_Student_Max = 0;
+        }
+        public BatchScheduler DeepCopy()
+        {
+            return new BatchScheduler
+            {
+                
+                Count_Student_Max = this.Count_Student_Max,
+                ProcessingTime = this.ProcessingTime,
+            };
+        }
     }
 }
