@@ -147,6 +147,7 @@ namespace ChuongTrinhChinh
                 if(checkHA10 && checkHA9 && checkHA8)
                 {
                     DotHienTai.Count_Student_Max = TongSiSo;
+                    DotHienTai.classrooms.Sort((x, y) => x.TimeToGate().CompareTo(y.TimeToGate())); // Sắp xếp tăng dần theo thời gian đi ra cổng
                     a.Add(DotHienTai.DeepCopy());
                     return;
                 }    

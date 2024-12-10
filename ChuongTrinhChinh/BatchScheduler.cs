@@ -28,6 +28,7 @@ namespace ChuongTrinhChinh
         /// Hàm sao chép thông tin từ 1 BatchScheduler vào 1 BatchScheduler khác
         /// </summary>
         /// <returns></returns>
+        // Done
         public BatchScheduler DeepCopy()
         {
             return new BatchScheduler
@@ -50,9 +51,12 @@ namespace ChuongTrinhChinh
         /// <summary>
         /// Hàm tính thời gian xử lí mỗi đợt
         /// </summary> 
-        public float ProcessingTime() {
-
-            return 0;
+        // Done
+        public float ProcessingTime(ClassInformation classInformation) {
+            float ThoiGianXuLi = 0;
+            foreach(var classroom in classrooms)
+                ThoiGianXuLi += classroom.ActualVehicalCount() * classInformation.StudentProcessingTime;   
+            return ThoiGianXuLi;
         }
     }
 }

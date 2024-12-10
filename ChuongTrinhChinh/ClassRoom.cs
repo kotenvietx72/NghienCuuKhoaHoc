@@ -17,12 +17,14 @@ namespace ChuongTrinhChinh
         public bool check {  get; set; }           // Đánh dấu đã được xử lí chưa
 
         public ClassRoom()
-        { }
-        public ClassRoom(int StudentCount, string ClassName, bool check)
         {
-            this.StudentCount = StudentCount;
-            this.ClassName = ClassName;
-            this.check = check;
+            ClassID = null;
+            NameSubject = null;
+            ClassName = null;
+            Session = null;
+            StudentCount = 0;
+            Room = null;
+            check = false;
         }
 
         /// <summary>
@@ -31,18 +33,21 @@ namespace ChuongTrinhChinh
         public float TimeToGate() {
             return 1;
         }
+
         /// <summary>
         /// Hàm tính thời gian 1 lớp đi ra hết khỏi cổng soát vé 
         /// </summary>
         public float ExitTime() {
             return 0;
         }
+
         /// <summary>
         /// Hàm tính số lượng xe thực tế của 1 lớp 
         /// </summary>
         public int ActualVehicalCount() {
             return 0;
         }
+
         /// <summary>
         /// Hàm lấy số tiết học của 1 lớp 
         /// </summary>
