@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChuongTrinhChinh
 {
-    internal class XuLiDuLieu
+    class XuLiDuLieu
     {
         /// <summary>
         /// Đọc file dữ liệu lớp học
@@ -141,11 +141,11 @@ namespace ChuongTrinhChinh
                     DotHienTai.classrooms.RemoveAt(DotHienTai.classrooms.Count - 1);
                 }
 
-                if (TongSiSo > GioiHanMaxSinhVien && TongSiSo < GioiHanMinSinhVien)
+                if (TongSiSo > GioiHanMaxSinhVien || TongSiSo < GioiHanMinSinhVien)
                     return;
 
-                if(checkHA10 && checkHA9 && checkHA8 && TongSiSo < GioiHanMaxSinhVien && TongSiSo > GioiHanMinSinhVien)
-                { 
+                if(checkHA10 && checkHA9 && checkHA8)
+                {
                     DotHienTai.Count_Student_Max = TongSiSo;
                     a.Add(DotHienTai.DeepCopy());
                     return;

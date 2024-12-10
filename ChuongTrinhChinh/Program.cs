@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace ChuongTrinhChinh
 {
-    internal class Program
+    class Program
     {
         public static void Main(string[] args)
         {
@@ -24,16 +24,6 @@ namespace ChuongTrinhChinh
             
             XuLiDuLieu.ChiaDotNhanhCan(batchSchedulers, classRooms, 300, 250);
 
-
-            foreach (BatchScheduler batchScheduler in batchSchedulers)
-            {
-                Console.WriteLine(batchScheduler.Count_Student_Max);
-                foreach (ClassRoom b in classRooms)
-                {
-                    Console.WriteLine("\t" + b.ClassName + " ");
-                }
-                Console.WriteLine();
-            }
         }
     }
 }
