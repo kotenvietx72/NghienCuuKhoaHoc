@@ -9,7 +9,6 @@ namespace ChuongTrinhChinh
     internal class BatchScheduler
     {
         public List<ClassRoom>? classrooms { get; set; }     // Danh sách các lớp 
-        public float ProcessingTime { get; set; }            // Thời gian xử lí 
         public int Count_Student_Max { get; set; }           // Số lượng sinh viên tối đa có thể xử lí 1 đợt
                                                       
         /// <summary>
@@ -19,10 +18,9 @@ namespace ChuongTrinhChinh
         {
             return 0;
         }
-        BatchScheduler()
+        public BatchScheduler()
         {
             classrooms = new List<ClassRoom>();
-            ProcessingTime = 0;
             Count_Student_Max = 0;
         }
 
@@ -46,10 +44,15 @@ namespace ChuongTrinhChinh
 
                 }).ToList() : new List<ClassRoom>(),
                 Count_Student_Max = this.Count_Student_Max,
-                ProcessingTime = this.ProcessingTime,
             };
         }
 
+        /// <summary>
+        /// Hàm tính thời gian xử lí mỗi đợt
+        /// </summary> 
+        public float ProcessingTime() {
 
+            return 0;
+        }
     }
 }

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ChuongTrinhChinh
 {
-    class XuLiDuLieu
-    {
+    internal class XuLiDuLieu
+    { 
+        
         /// <summary>
         /// Đọc file dữ liệu lớp học
         /// </summary>
@@ -42,7 +43,6 @@ namespace ChuongTrinhChinh
                 Console.WriteLine(ex.Message);
             }
         }
-
         /// <summary>
         /// Đọc file dữ liệu thông tin của trường
         /// </summary>
@@ -155,11 +155,8 @@ namespace ChuongTrinhChinh
         }
  
         /// <summary>
-        /// Hàm tính thời gian xử lí mỗi đợt
-        /// </summary> 
-        public static void TinhTGXuLiMoiDot() { }
-        /// <summary>
         /// Hàm tính best time để đưa ra lộ trình các đợt
         /// </summary> 
-        public static void NhanhCan() { }    }
+        public static void NhanhCan() { }    
+    }
 }
