@@ -20,8 +20,14 @@ namespace ChuongTrinhChinh
                 XuLiDuLieu.readClassFromFile(filepath1, classRooms); 
                 XuLiDuLieu.readInforFromFile(filepath2, a);
             }     
-            XuLiDuLieu.ChiaDotNhanhCan(batchSchedulers, classRooms, 300, 250);
+            XuLiDuLieu.ChiaDotNhanhCan(batchSchedulers, classRooms, a, 300, 250);
 
+            foreach (var x in batchSchedulers)
+            {
+                foreach(var y in x.classrooms)
+                    Console.Write("\t" + y.ClassName);  
+                Console.WriteLine();
+            }
         }
     }
 }

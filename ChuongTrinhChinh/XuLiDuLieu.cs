@@ -119,7 +119,7 @@ namespace ChuongTrinhChinh
         /// <summary>
         /// Hàm chia các lớp thành các đợt
         /// </summary> 
-        public static void ChiaDotNhanhCan(List<BatchScheduler> a, List<ClassRoom> b, int GioiHanMaxSinhVien, int GioiHanMinSinhVien)
+        public static void ChiaDotNhanhCan(List<BatchScheduler> a, List<ClassRoom> b, ClassInformation classInformation, int GioiHanMaxSinhVien, int GioiHanMinSinhVien)
         {
             var classHA8 = b.Where(lop => lop.Room?.Substring(2, 2) == "A8" && Check(lop) == false).ToList();
             var classHA9 = b.Where(lop => lop.Room?.Substring(2, 2) == "A9" && Check(lop) == false).ToList();
@@ -147,7 +147,7 @@ namespace ChuongTrinhChinh
                 if(checkHA10 && checkHA9 && checkHA8)
                 {
                     DotHienTai.Count_Student_Max = TongSiSo;
-                    DotHienTai.classrooms.Sort((x, y) => x.TimeToGate().CompareTo(y.TimeToGate())); // Sắp xếp tăng dần theo thời gian đi ra cổng
+                    DotHienTai.classrooms.Sort((x, y) => x.TimeToGate(classInformation).CompareTo(y.TimeToGate(classInformation))); // Sắp xếp tăng dần theo thời gian đi ra cổng
                     a.Add(DotHienTai.DeepCopy());
                     return;
                 }    
