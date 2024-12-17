@@ -25,9 +25,11 @@ namespace ChuongTrinhChinh
             foreach (var x in batchSchedulers)
             {
                 foreach(var y in x.classrooms)
-                    Console.Write("\t" + y.ClassName);  
+                    Console.Write("\t" + y.ClassName);
+                Console.Write(" " + x.WaitTime(a));
                 Console.WriteLine();
             }
+            XuLiDuLieu.NhanhCan(batchSchedulers, a);
         }
     }
 }

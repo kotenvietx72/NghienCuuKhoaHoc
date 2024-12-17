@@ -117,8 +117,20 @@ namespace ChuongTrinhChinh
         }
 
         /// <summary>
+        /// Hàm tick các lớp được chọn thành đã xử lí
+        /// </summary>
+        /// <param name="a"></param>
+        // Done
+        public static void TickCheck(BatchScheduler a)
+        {
+            foreach (var x in a.classrooms)
+                x.check = true;
+        }
+
+        /// <summary>
         /// Hàm chia các lớp thành các đợt
         /// </summary> 
+        // Tạm Done
         public static void ChiaDotNhanhCan(List<BatchScheduler> a, List<ClassRoom> b, ClassInformation classInformation, int GioiHanMaxSinhVien, int GioiHanMinSinhVien)
         {
             var classHA8 = b.Where(lop => lop.Room?.Substring(2, 2) == "A8" && Check(lop) == false).ToList();
@@ -158,6 +170,18 @@ namespace ChuongTrinhChinh
         /// <summary>
         /// Hàm tính best time để đưa ra lộ trình các đợt
         /// </summary> 
-        public static void NhanhCan() { }    
+        // Tạm Done
+        public static void NhanhCan(List<BatchScheduler> a, ClassInformation b) {
+            BatchScheduler besttime = a.Any() ? a.OrderBy(x => x.WaitTime(b)).First() : null;
+            TickCheck(besttime);
+            Console.WriteLine();
+            foreach (var x in besttime.classrooms)
+            {
+                Console.WriteLine(x.ClassName);
+            }
+            Console.WriteLine(besttime.WaitTime(b));
+        }    
+
+        
     }
 }

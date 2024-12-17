@@ -10,13 +10,36 @@ namespace ChuongTrinhChinh
     {
         public List<ClassRoom>? classrooms { get; set; }     // Danh sách các lớp 
         public int Count_Student_Max { get; set; }           // Số lượng sinh viên tối đa có thể xử lí 1 đợt
-                                                      
+        
         /// <summary>
-        /// Hàm tính thời gian trống (Nếu có) của mỗi đợt
+        /// Hàm tính tổng số sinh viên của n lớp trong classrooms, n được truyền vào biến số  
         /// </summary>
-        public float TinhTGTrong()
+        /// <param name="room"></param>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        // Done
+        public float TinhTongSoSVYC(int a)
         {
-            return 0;
+            if(a == 0)
+                return 0;
+            return classrooms[a - 1].ActualVehicalCount() + TinhTongSoSVYC(a - 1);
+        }
+        
+        /// <summary>
+        /// Hàm tính thời gian trống của n lớp trong 1 đợt (Nếu có) 
+        /// </summary>
+        // Done
+        public float TinhTGTrong(ClassInformation classInformation, int a)
+        {
+            float ThoiGianTrong = 0;
+            for (int i = 1; i < a; i++)
+            {
+                if ((classrooms[i].TimeToGate(classInformation) - classrooms[0].TimeToGate(classInformation)) < TinhTongSoSVYC(i) + ThoiGianTrong)
+                    ThoiGianTrong += 0;
+                else
+                    ThoiGianTrong += (classrooms[i].TimeToGate(classInformation) - classrooms[0].TimeToGate(classInformation)) - TinhTongSoSVYC(i) - ThoiGianTrong;
+            }
+            return ThoiGianTrong;
         }
         public BatchScheduler()
         {
@@ -57,6 +80,25 @@ namespace ChuongTrinhChinh
             foreach(var classroom in classrooms)
                 ThoiGianXuLi += classroom.ActualVehicalCount() * classInformation.StudentProcessingTime;   
             return ThoiGianXuLi;
+        }
+
+        /// <summary>
+        /// Hàm tính thời gian chờ của 1 đợt (Dùng để xét nhánh cận) 
+        /// </summary>
+        /// <param name="classInformation"></param>
+        /// <returns></returns>
+        // Done
+        public float WaitTime(ClassInformation classInformation)
+        {
+            float ThoiGianCho = 0;
+            for(int i = 0; i < classrooms.Count; i++)
+            {
+                if (TinhTongSoSVYC(i) + TinhTGTrong(classInformation, i) > (classrooms[i].TimeToGate(classInformation) - classrooms[0].TimeToGate(classInformation)))
+                    ThoiGianCho += TinhTongSoSVYC(i) + TinhTGTrong(classInformation, i) - (classrooms[i].TimeToGate(classInformation) - classrooms[0].TimeToGate(classInformation));
+                else
+                    ThoiGianCho += 0;
+            }    
+            return ThoiGianCho;
         }
     }
 }
