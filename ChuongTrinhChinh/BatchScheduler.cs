@@ -8,47 +8,12 @@ namespace ChuongTrinhChinh
 {
     internal class BatchScheduler
     {
-        public List<ClassRoom>? classrooms { get; set; }     // Danh sách các lớp 
-        public int Count_Student_Max { get; set; }           // Số lượng sinh viên tối đa có thể xử lí 1 đợt
-        
-        /// <summary>
-        /// Hàm tính tổng số sinh viên của n lớp trong classrooms, n được truyền vào biến số  
-        /// </summary>
-        /// <param name="room"></param>
-        /// <param name="a"></param>
-        /// <returns></returns>
-        // Done
-        public float TinhTongSoSVYC(int a)
-        {
-            if(a == 0)
-                return 0;
-            return classrooms[a - 1].ActualVehicalCount() + TinhTongSoSVYC(a - 1);
-        }
-        
-        /// <summary>
-        /// Hàm tính thời gian trống của n lớp trong 1 đợt (Nếu có) 
-        /// </summary>
-        // Done
-        public float TinhTGTrong(ClassInformation classInformation, int a)
-        {
-            float ThoiGianTrong = 0;
-            for (int i = 1; i < a; i++)
-            {
-                if ((classrooms[i].TimeToGate(classInformation) - classrooms[0].TimeToGate(classInformation)) < TinhTongSoSVYC(i) + ThoiGianTrong)
-                    ThoiGianTrong += 0;
-                else
-                    ThoiGianTrong += (classrooms[i].TimeToGate(classInformation) - classrooms[0].TimeToGate(classInformation)) - TinhTongSoSVYC(i) - ThoiGianTrong;
-            }
-            return ThoiGianTrong;
-        }
-        public BatchScheduler()
-        {
-            classrooms = new List<ClassRoom>();
-            Count_Student_Max = 0;
-        }
+        public List<ClassRoom> classrooms { get; set; } = new List<ClassRoom>();    // Danh sách các lớp 
+
+        private ClassInformation classInformation = XuLiDuLieu.readInforFromFile();
 
         /// <summary>
-        /// Hàm sao chép thông tin từ 1 BatchScheduler vào 1 BatchScheduler khác
+        /// Hàm sao chép thông tin từ đợt này vào đợt khác        
         /// </summary>
         /// <returns></returns>
         // Done
@@ -67,38 +32,81 @@ namespace ChuongTrinhChinh
                     check = lop.check,
 
                 }).ToList() : new List<ClassRoom>(),
-                Count_Student_Max = this.Count_Student_Max,
             };
+        }
+
+
+        /// <summary>
+        /// Hàm tính thời gian xử lí của i lớp đầu tiên trong list các lớp 
+        /// </summary>
+        /// <param name="room"></param>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        // Done
+        public double TotalTimeForFirst(int i)
+        {
+            if(i == 0) 
+                return 0;
+            return classrooms[i - 1].ExitTime() + TotalTimeForFirst(i - 1);
+        }
+        
+        /// <summary>
+        /// Hàm tính thời gian trống của a lớp đầu tiên trong đợt (Nếu có) 
+        /// </summary>
+        // Done
+        public double TinhTGTrong(int a)
+        {
+            double ThoiGianTrong = 0;
+            for (int i = 1; i < a; i++)
+            {
+                if ((classrooms[i].TimeToGate() - classrooms[0].TimeToGate()) < TotalTimeForFirst(i) + ThoiGianTrong)
+                    ThoiGianTrong += 0;
+                else
+                    ThoiGianTrong += (classrooms[i].TimeToGate() - classrooms[0].TimeToGate()) - TotalTimeForFirst(i) - ThoiGianTrong;
+            }
+            return ThoiGianTrong;
         }
 
         /// <summary>
         /// Hàm tính thời gian xử lí mỗi đợt
         /// </summary> 
         // Done
-        public float ProcessingTime(ClassInformation classInformation) {
-            float ThoiGianXuLi = 0;
-            foreach(var classroom in classrooms)
-                ThoiGianXuLi += classroom.ActualVehicalCount() * classInformation.StudentProcessingTime;   
-            return ThoiGianXuLi;
+        public double ProcessingTime() {
+            double ThoiGianXuLi = 0;
+            foreach (var classroom in classrooms)
+                ThoiGianXuLi += classroom.ExitTime();
+            return ThoiGianXuLi + TinhTGTrong(classrooms.Count);
         }
 
         /// <summary>
-        /// Hàm tính thời gian chờ của 1 đợt (Dùng để xét nhánh cận) 
+        /// Hàm tính thời gian chờ của 1 đợt
         /// </summary>
         /// <param name="classInformation"></param>
         /// <returns></returns>
         // Done
-        public float WaitTime(ClassInformation classInformation)
+        public double WaitTime()
         {
-            float ThoiGianCho = 0;
-            for(int i = 0; i < classrooms.Count; i++)
+            double ThoiGianCho = 0;
+            for(int i = 1; i < classrooms.Count; i++)
             {
-                if (TinhTongSoSVYC(i) + TinhTGTrong(classInformation, i) > (classrooms[i].TimeToGate(classInformation) - classrooms[0].TimeToGate(classInformation)))
-                    ThoiGianCho += TinhTongSoSVYC(i) + TinhTGTrong(classInformation, i) - (classrooms[i].TimeToGate(classInformation) - classrooms[0].TimeToGate(classInformation));
+                if (TotalTimeForFirst(i) + TinhTGTrong(i) > (classrooms[i].TimeToGate() - classrooms[0].TimeToGate()))
+                    ThoiGianCho += TotalTimeForFirst(i) + TinhTGTrong(i) - (classrooms[i].TimeToGate() - classrooms[0].TimeToGate());
                 else
                     ThoiGianCho += 0;
             }    
-            return ThoiGianCho;
+            return Math.Round(ThoiGianCho, 2);
+        }
+
+        /// <summary>
+        /// Hàm tính tổng số sinh viên trong 1 đợt
+        /// </summary>
+        /// <param name="classrooms"></param>
+        /// <returns></returns>
+        public int Count_Student()
+        {
+            if(classrooms.Count == 0) 
+                return 0;
+            return classrooms.Sum(c => c.StudentCount);
         }
     }
 }

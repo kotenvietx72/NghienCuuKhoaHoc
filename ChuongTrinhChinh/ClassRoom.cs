@@ -8,30 +8,22 @@ namespace ChuongTrinhChinh
 {
     internal class ClassRoom
     {
-        public string? ClassID {  get; set; }      // Id lớp (Tự đặt)
-        public string? NameSubject { get; set; }   // Tên môn học
-        public string? ClassName { get; set; }     // Tên lớp
-        public string? Session {  get; set; }      // Số tiết lấy từ sql
-        public int StudentCount { get; set; }      // Số lượng sinh viên
-        public string? Room {  get; set; }         // Phòng học
-        public bool check {  get; set; }           // Đánh dấu đã được xử lí chưa
+        public string ClassID {  get; set; }        // Id lớp (Tự đặt)
+        public string NameSubject { get; set; }     // Tên môn học
+        public string ClassName { get; set; }       // Tên lớp
+        public string Session {  get; set; }        // Số tiết lấy từ sql
+        public int StudentCount { get; set; }       // Số lượng sinh viên
+        public string Room {  get; set; }           // Phòng học
+        public bool check { get; set; } = false;    // Đánh dấu đã được xử lí chưa
+        public int DismissalTime { get; set; }      // Thời gian tan học
 
-        public ClassRoom()
-        {
-            ClassID = null;
-            NameSubject = null;
-            ClassName = null;
-            Session = null;
-            StudentCount = 0;
-            Room = null;
-            check = false;
-        }
+        private ClassInformation classInformation = XuLiDuLieu.readInforFromFile();
 
         /// <summary>
         /// Hàm tính thời gian đi từ lớp tới cổng soát vé 
         /// </summary>
         // Done
-        public float TimeToGate(ClassInformation classInformation) {
+        public float TimeToGate() {
             if(Room?.Substring(2,2) == "A8")
             {
                 int SoTang = int.Parse(Room.Substring(5,1));
@@ -47,14 +39,33 @@ namespace ChuongTrinhChinh
             else if(Room?.Substring(2, 2) == "A9")
             {
                 int SoTang = int.Parse(Room.Substring(5, 1));
-                int Index = int.Parse(Room.Substring(6, 2)) switch
-                {
-                    01 or 02 or 10 => 0,
-                    03 or 04 or 08 or 09 => 1,
-                    05 or 06 or 07 => 2,
-                    _ => 0
-                };
-                return 60 + 5 * Index + (SoTang - 1) * classInformation.H9timing.Time_Stair_1Floor + classInformation.H9timing.Time_Stair_To_Parking + classInformation.H9timing.Time_Parking_To_Gate;
+                if (int.Parse(Room.Substring(5, 1)) < 4) {
+                    int Index = int.Parse(Room.Substring(6, 2)) switch {
+                        01 or 02 or 07 or 08 => 0,
+                        03 or 04 or 05 or 06 => 1,
+                        _ => 0
+                    };
+                    return 60 + 5 * Index + (SoTang - 1) * classInformation.H9timing.Time_Stair_1Floor + classInformation.H9timing.Time_Stair_To_Parking + classInformation.H9timing.Time_Parking_To_Gate;
+                }
+                else {
+                    if(Room.Length == 8) {
+                        int Index = int.Parse(Room.Substring(6, 2)) switch {
+                            01 or 02 or 09 => 0,
+                            03 or 04 or 07 => 1,
+                            05 or 06 or 08 => 2,
+                            _ => 0
+                        };
+                        return 60 + 5 * Index + (SoTang - 1) * classInformation.H9timing.Time_Stair_1Floor + classInformation.H9timing.Time_Stair_To_Parking + classInformation.H9timing.Time_Parking_To_Gate;
+                    }
+                    else {
+                        int Index = int.Parse(Room.Substring(7, 2)) switch {
+                            12 => 0,
+                            10 => 1,
+                            _ => 0
+                        };
+                        return 60 + 5 * Index + (SoTang - 1) * classInformation.H9timing.Time_Stair_1Floor + classInformation.H9timing.Time_Stair_To_Parking + classInformation.H9timing.Time_Parking_To_Gate;
+                    }    
+                }       
             }
             else if(Room?.Substring(2, 3) == "A10")
             {
@@ -102,16 +113,8 @@ namespace ChuongTrinhChinh
         /// Hàm tính thời gian 1 lớp đi ra hết khỏi cổng soát vé 
         /// </summary>
         // Done
-        public float ExitTime(ClassInformation classInformation) {
-            return ActualVehicalCount() * classInformation.StudentProcessingTime / classInformation.GateCount;
-        }
-
-        /// <summary>
-        /// Hàm tính số lượng xe thực tế của 1 lớp 
-        /// </summary>
-        // Done
-        public int ActualVehicalCount() {
-            return (int)Math.Ceiling(StudentCount * 0.93);
+        public double ExitTime() {
+            return StudentCount * classInformation.StudentProcessingTime / classInformation.GateCount * 0.85;
         }
 
         /// <summary>

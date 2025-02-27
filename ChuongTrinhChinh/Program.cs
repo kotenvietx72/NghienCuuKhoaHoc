@@ -11,25 +11,17 @@ namespace ChuongTrinhChinh
 {
     internal class Program
     {
-        public static void Main(string[] args)
+        static void Main()
         {
-            List<ClassRoom> classRooms = new List<ClassRoom>(); ClassInformation a = new ClassInformation(); List<BatchScheduler> batchSchedulers = new List<BatchScheduler>();
+            List<ClassRoom> classRooms = XuLiDuLieu.readClassFromFile(); List<BatchScheduler> batchSchedulers = new List<BatchScheduler>();
+            XuLiDuLieu.TimCacDotToiUu(batchSchedulers, classRooms);
+            foreach (BatchScheduler a in batchSchedulers)
             {
-                string filepath1 = "A:\\NghienCuuKhoaHoc\\ChuongTrinhChinh\\ChuongTrinhChinh\\Data\\Test.txt";
-                string filepath2 = "A:\\NghienCuuKhoaHoc\\ChuongTrinhChinh\\ChuongTrinhChinh\\Data\\DataUniversity.txt";
-                XuLiDuLieu.readClassFromFile(filepath1, classRooms); 
-                XuLiDuLieu.readInforFromFile(filepath2, a);
-            }     
-            XuLiDuLieu.ChiaDotNhanhCan(batchSchedulers, classRooms, a, 300, 250);
-
-            foreach (var x in batchSchedulers)
-            {
-                foreach(var y in x.classrooms)
-                    Console.Write("\t" + y.ClassName);
-                Console.Write(" " + x.WaitTime(a));
-                Console.WriteLine();
+                foreach (ClassRoom room in a.classrooms)
+                    Console.Write(room.ClassName + " ");
+                Console.WriteLine(a.Count_Student() + " " + a.WaitTime() + " " + a.ProcessingTime());
             }
-            XuLiDuLieu.NhanhCan(batchSchedulers, a);
         }
-    }
+
+     }
 }
