@@ -16,7 +16,7 @@ namespace ChuongTrinhChinh
         // Giới hạn Max: Khả năng xử lí của cổng trong 5 phút
         public static int GioiHanMaxSinhVien = (int)(classInformation.StudentProcessingTime / classInformation.GateCount * 300);
         // Biến đếm thời gian để các lớp được xử lí
-        public static int Time = 0;
+        public static int SegmentTime = 0;
 
         /// <summary>
         /// Đọc file dữ liệu lớp học
@@ -117,29 +117,39 @@ namespace ChuongTrinhChinh
         }
 
         /// <summary>
-        /// Hàm kiểm tra xem đợt hiện tại có đủ lớp của 3 tòa nhà không       
+        /// Hàm đếm xem đợt hiện tại có bao nhiêu tòa         
         /// </summary>
         /// <param name="batchScheduler"></param>
         /// <returns></returns>
         // Done
-        public static bool IsValidBatch(BatchScheduler batchScheduler)
+        public static int IsValidBatch(BatchScheduler batchScheduler)
         {
-            var checkHA8 = batchScheduler.classrooms.Any(c => c.Room.Contains("A8"));
-            var checkHA9 = batchScheduler.classrooms.Any(c => c.Room.Contains("A9"));
-            var checkHA10 = batchScheduler.classrooms.Any(c => c.Room.Contains("A10"));
-            return checkHA8 && checkHA9 && checkHA10;
+            int dem = 0;
+            if(batchScheduler.classrooms.Any(c => c.Room.Contains("A8")))
+                dem++;
+            if(batchScheduler.classrooms.Any(c => c.Room.Contains("A9")))
+                dem++;
+            if (batchScheduler.classrooms.Any(c => c.Room.Contains("A10")))
+                dem++;
+            return dem;
         }
 
         /// <summary>
-        /// Hàm kiểm tra trong danh sách các lớp chưa được xử lí có đủ lớp của 3 tòa không
+        /// Hàm đếm các lớp trong danh sách có bao nhiêu tòa     
         /// </summary>
         /// <param name="classRooms"></param>
         /// <returns></returns>
-        public static bool CheckBuilding(List<ClassRoom> classRooms) {
-            bool checkHA8 = classRooms.Any(c => !c.check && c.Room.Contains("A8"));
-            bool checkHA9 = classRooms.Any(c => !c.check && c.Room.Contains("A9"));
-            bool checkHA10 = classRooms.Any(c => !c.check && c.Room.Contains("A10"));
-            return checkHA8 && checkHA9 && checkHA10;
+        // Done
+        public static int CountBuilding(List<ClassRoom> classRooms) {
+            int dem = 0;
+            if (classRooms.Any(c => !c.check && c.Room.Contains("A8")))
+                dem++;
+
+            if (classRooms.Any(c => !c.check && c.Room.Contains("A9")))
+                dem++;
+            if (classRooms.Any(c => !c.check && c.Room.Contains("A10")))
+                dem++;
+            return dem;
         }
 
         /// <summary>
@@ -186,7 +196,7 @@ namespace ChuongTrinhChinh
                 if (NhomDangXet.Count_Student() > GioiHanMaxSinhVien)
                     return;
                 // Nếu nhóm đang xét hợp lệ và tốt hơn nhóm hiện tại => lưu lại nhóm tốt hơn
-                if ((NhomDangXet.Count_Student() >= GioiHanMinSinhVien && IsValidBatch(NhomDangXet)))
+                if ((NhomDangXet.Count_Student() >= GioiHanMinSinhVien && IsValidBatch(NhomDangXet) == 3 && CountBuilding(classrooms) == 3))
                 {
                     if (bestBatchesCurrentRound.Count == 0 || NhomDangXet.WaitTime() / NhomDangXet.classrooms.Count < bestBatchesCurrentRound.Last().WaitTime()/ bestBatchesCurrentRound.Last().classrooms.Count) {
                         bestBatchesCurrentRound.Clear();
@@ -195,6 +205,19 @@ namespace ChuongTrinhChinh
                     }                               
                     return;                                                             
                 }
+
+                // TH: Một tòa xử lí xong, còn 2 tòa chưa được xử lí,  
+                if (NhomDangXet.Count_Student() >= GioiHanMinSinhVien && IsValidBatch(NhomDangXet) == 2 && CountBuilding(classrooms) == 2 ) {
+                    if (bestBatchesCurrentRound.Count == 0 || NhomDangXet.WaitTime() / NhomDangXet.classrooms.Count < bestBatchesCurrentRound.Last().WaitTime() / bestBatchesCurrentRound.Last().classrooms.Count)
+                    {
+                        bestBatchesCurrentRound.Clear();
+                        bestBatchesCurrentRound.Add(NhomDangXet.DeepCopy());
+                        NhomDuocChon.classrooms = NhomDangXet.DeepCopy().classrooms;
+                    }
+                    return;
+                }
+
+
 
                 for (int i = index; i < classrooms.Count; i++)                          // Duyệt qua tất cả các lớp trong danh sách
                 {
@@ -208,8 +231,20 @@ namespace ChuongTrinhChinh
 
         }   
 
+        /// <summary>
+        /// Tính thời gian tan học cho các lớp
+        /// </summary>
+        /// <param name="bestBatches"></param>
         public static void TinhThoiGianTanHoc(List<BatchScheduler> bestBatches) {
-
+            for(int i = 0; i < bestBatches.Count - 1; i++) {
+                double Time = bestBatches[i].ProcessingTime() + bestBatches[i].classrooms[0].TimeToGate() - bestBatches[i + 1].classrooms[0].TimeToGate();
+                bestBatches[i + 1].DismissalTimeBatch = bestBatches[i + 1].DismissalTimeBatch.AddSeconds(Time);
+            }
+            foreach(var batch in bestBatches) {
+                foreach (var classroom in batch.classrooms) {
+                    classroom.DismissalTime = batch.DismissalTimeBatch;
+                }
+            }
         }
     }
 }

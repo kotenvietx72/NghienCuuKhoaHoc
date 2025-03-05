@@ -9,6 +9,7 @@ namespace ChuongTrinhChinh
     internal class BatchScheduler
     {
         public List<ClassRoom> classrooms { get; set; } = new List<ClassRoom>();    // Danh sách các lớp 
+        public DateTime DismissalTimeBatch { get; set; } = new DateTime(2025, 1, 1, 12, 35, 0);
 
         private ClassInformation classInformation = XuLiDuLieu.readInforFromFile();
 

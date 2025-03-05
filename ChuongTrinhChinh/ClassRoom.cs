@@ -14,8 +14,20 @@ namespace ChuongTrinhChinh
         public string Session {  get; set; }        // Số tiết lấy từ sql
         public int StudentCount { get; set; }       // Số lượng sinh viên
         public string Room {  get; set; }           // Phòng học
-        public bool check { get; set; } = false;    // Đánh dấu đã được xử lí chưa
-        public int DismissalTime { get; set; }      // Thời gian tan học
+        public bool check { get; set; }             // Đánh dấu đã được xử lí chưa
+        public DateTime DismissalTime { get; set; } // Thời gian tan học
+
+
+        public ClassRoom() {
+            ClassID = "";
+            NameSubject = "";
+            ClassName = "";
+            Session = "";
+            StudentCount = 0;
+            Room = "";
+            check = false;
+            DismissalTime = new DateTime(2025, 1, 1, 12, 35, 0);
+        }
 
         private ClassInformation classInformation = XuLiDuLieu.readInforFromFile();
 
@@ -132,5 +144,6 @@ namespace ChuongTrinhChinh
                 _ => 0
             };
         }
+
     }
 }
