@@ -26,7 +26,7 @@ namespace ChuongTrinhChinh
             StudentCount = 0;
             Room = "";
             check = false;
-            DismissalTime = new DateTime(2025, 1, 1, 12, 35, 0);
+            DismissalTime = new DateTime(2025, 1, 1, 11, 35, 0);
         }
 
         private ClassInformation classInformation = XuLiDuLieu.readInforFromFile();

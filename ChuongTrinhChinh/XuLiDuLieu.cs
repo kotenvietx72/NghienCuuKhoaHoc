@@ -26,7 +26,7 @@ namespace ChuongTrinhChinh
         public static List<ClassRoom> readClassFromFile()
         {
             List<ClassRoom> classRooms = new List<ClassRoom>();
-            string filePath = "A:\\NghienCuuKhoaHoc\\ChuongTrinhChinh\\ChuongTrinhChinh\\Data\\Input.txt";
+            string filePath = "A:\\NghienCuuKhoaHoc\\ChuongTrinhChinh\\ChuongTrinhChinh\\Data\\Test.txt";
             try
             {
                 using (StreamReader sr = new StreamReader(filePath, System.Text.Encoding.UTF8))
@@ -159,11 +159,14 @@ namespace ChuongTrinhChinh
         /// <param name="classrooms"></param>
         public static void TimCacDotToiUu(List<BatchScheduler> bestBatches, List<ClassRoom> classrooms) {
             List<BatchScheduler> bestBatchesCurrentRound;
-            SapXep(classrooms);
+            
             while (classrooms.Any(c => !c.check)) {                                             // Lặp đến khi xử lí hết các lớp trong danh sách
+                
                 bestBatchesCurrentRound = new List<BatchScheduler>();
                 var NhomDangXet = new BatchScheduler();
                 var NhomDuocChon = new BatchScheduler();
+                SapXep(classrooms);
+
                 NhanhCan(NhomDangXet, 0, NhomDuocChon);                                         // Gọi thuật toán nhánh cận, với nhóm mới và bắt đầu từ 0
                 if (NhomDuocChon.classrooms.Count > 0)                                          // Kiểm tra nhóm đang xét có lớp hay không
                 {                          
@@ -195,29 +198,28 @@ namespace ChuongTrinhChinh
                 // Nếu nhóm đang xét có tổng số lượng sinh viên lớn hơn GioiHanMax thì dừng nhánh này
                 if (NhomDangXet.Count_Student() > GioiHanMaxSinhVien)
                     return;
+
                 // Nếu nhóm đang xét hợp lệ và tốt hơn nhóm hiện tại => lưu lại nhóm tốt hơn
-                if ((NhomDangXet.Count_Student() >= GioiHanMinSinhVien && IsValidBatch(NhomDangXet) == 3 && CountBuilding(classrooms) == 3))
+                if (NhomDangXet.Count_Student() >= GioiHanMinSinhVien && IsValidBatch(NhomDangXet) == 3 && CountBuilding(classrooms) == 3 || NhomDangXet.Count_Student() >= GioiHanMinSinhVien && IsValidBatch(NhomDangXet) == 2 && CountBuilding(classrooms) == 2 || NhomDangXet.Count_Student() >= GioiHanMinSinhVien && IsValidBatch(NhomDangXet) == 1 && CountBuilding(classrooms) == 1)
                 {
+                    // Nếu NhomDangXet có tỉ lệ thời gian xử lí/ tổng số lớp < đợt hiện tại => Lưu NhomDangXet thay thế bestBatches
                     if (bestBatchesCurrentRound.Count == 0 || NhomDangXet.WaitTime() / NhomDangXet.classrooms.Count < bestBatchesCurrentRound.Last().WaitTime()/ bestBatchesCurrentRound.Last().classrooms.Count) {
                         bestBatchesCurrentRound.Clear();
                         bestBatchesCurrentRound.Add(NhomDangXet.DeepCopy());
                         NhomDuocChon.classrooms = NhomDangXet.DeepCopy().classrooms;
-                    }                               
+                    }
+                    // Nếu NhomDangXet có tỉ lệ thời gian xử lí/ tổng số lớp = đợt hiện tại => Xét tiếp thời gian xử lí
+                    if (NhomDangXet.WaitTime() / NhomDangXet.classrooms.Count == bestBatchesCurrentRound.Last().WaitTime() / bestBatchesCurrentRound.Last().classrooms.Count)
+                    {
+                        if(NhomDangXet.ProcessingTime() / NhomDangXet.classrooms.Count < bestBatchesCurrentRound.Last().ProcessingTime() / bestBatchesCurrentRound.Last().classrooms.Count)
+                        {
+                            bestBatchesCurrentRound.Clear();
+                            bestBatchesCurrentRound.Add(NhomDangXet.DeepCopy());
+                            NhomDuocChon.classrooms = NhomDangXet.DeepCopy().classrooms;
+                        }
+                    }
                     return;                                                             
                 }
-
-                // TH: Một tòa xử lí xong, còn 2 tòa chưa được xử lí,  
-                if (NhomDangXet.Count_Student() >= GioiHanMinSinhVien && IsValidBatch(NhomDangXet) == 2 && CountBuilding(classrooms) == 2 ) {
-                    if (bestBatchesCurrentRound.Count == 0 || NhomDangXet.WaitTime() / NhomDangXet.classrooms.Count < bestBatchesCurrentRound.Last().WaitTime() / bestBatchesCurrentRound.Last().classrooms.Count)
-                    {
-                        bestBatchesCurrentRound.Clear();
-                        bestBatchesCurrentRound.Add(NhomDangXet.DeepCopy());
-                        NhomDuocChon.classrooms = NhomDangXet.DeepCopy().classrooms;
-                    }
-                    return;
-                }
-
-
 
                 for (int i = index; i < classrooms.Count; i++)                          // Duyệt qua tất cả các lớp trong danh sách
                 {
@@ -236,15 +238,32 @@ namespace ChuongTrinhChinh
         /// </summary>
         /// <param name="bestBatches"></param>
         public static void TinhThoiGianTanHoc(List<BatchScheduler> bestBatches) {
-            for(int i = 0; i < bestBatches.Count - 1; i++) {
-                double Time = bestBatches[i].ProcessingTime() + bestBatches[i].classrooms[0].TimeToGate() - bestBatches[i + 1].classrooms[0].TimeToGate();
-                bestBatches[i + 1].DismissalTimeBatch = bestBatches[i + 1].DismissalTimeBatch.AddSeconds(Time);
+            double Time = 0;
+            for (int i = 1; i < bestBatches.Count; i++) {
+                // Lấy thời gian đi đến cổng ngắn nhất của đợt trước
+                double minTimePrev = bestBatches[i - 1].classrooms.Min(c => c.TimeToGate());
+                // Lấy thời gian đi đến cổng ngắn nhất của đợt sau
+                double minTimeCurrent = bestBatches[i].classrooms.Min(c => c.TimeToGate());
+                // Tính thời gian tan học của đợt hiện tại: Thời gian xử lí đợt trước + thời gian di chuyển ngắn nhất đợt trước - thời gian di chuyển ngắn nhất của đợt sau
+                Time += bestBatches[i - 1].ProcessingTime() + minTimePrev - minTimeCurrent;
+                if(Time < 1200)
+                {
+                    DateTime newDismissalTime = bestBatches[i].DismissalTimeBatch.AddSeconds(Time);
+                    bestBatches[i].DismissalTimeBatch = newDismissalTime;
+                }
+                else
+                {
+                    DateTime newDismissalTime = bestBatches[i].DismissalTimeBatch.AddSeconds(1200);
+                    bestBatches[i].DismissalTimeBatch = newDismissalTime;
+                }
+                
             }
             foreach(var batch in bestBatches) {
                 foreach (var classroom in batch.classrooms) {
                     classroom.DismissalTime = batch.DismissalTimeBatch;
                 }
             }
+            
         }
     }
 }

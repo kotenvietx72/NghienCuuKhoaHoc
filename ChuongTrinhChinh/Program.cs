@@ -20,6 +20,7 @@ namespace ChuongTrinhChinh
 
             foreach (BatchScheduler a in batchSchedulers)
             {
+                
                 foreach (ClassRoom room in a.classrooms)
                     Console.Write(room.ClassName + " ");
                 Console.WriteLine(a.Count_Student() + " " + a.WaitTime() + " " + a.ProcessingTime());
@@ -27,8 +28,15 @@ namespace ChuongTrinhChinh
 
             Console.WriteLine();
 
-            foreach(ClassRoom room in classRooms)
-                Console.WriteLine(room.ClassName + " " + room.DismissalTime.Hour + "h " + room.DismissalTime.Minute + "p " + room.DismissalTime.Second + "s ");    
+            foreach (var batch in batchSchedulers)
+            {
+                foreach (var classroom in batch.classrooms)
+                {
+                    Console.WriteLine($"Checking: Class {classroom.ClassName} - Dismissal Time: {classroom.DismissalTime}");
+                }
+            }
+
+
         }
 
      }

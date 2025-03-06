@@ -8,8 +8,8 @@ namespace ChuongTrinhChinh
 {
     internal class BatchScheduler
     {
-        public List<ClassRoom> classrooms { get; set; } = new List<ClassRoom>();    // Danh sách các lớp 
-        public DateTime DismissalTimeBatch { get; set; } = new DateTime(2025, 1, 1, 12, 35, 0);
+        public List<ClassRoom> classrooms { get; set; } = new List<ClassRoom>();                    // Danh sách các lớp 
+        public DateTime DismissalTimeBatch { get; set; } = new DateTime(2025, 1, 1, 11, 35, 0);     // Thời gian tan học của một đợt
 
         private ClassInformation classInformation = XuLiDuLieu.readInforFromFile();
 
@@ -36,7 +36,6 @@ namespace ChuongTrinhChinh
             };
         }
 
-
         /// <summary>
         /// Hàm tính thời gian xử lí của i lớp đầu tiên trong list các lớp 
         /// </summary>
@@ -46,7 +45,8 @@ namespace ChuongTrinhChinh
         // Done
         public double TotalTimeForFirst(int i)
         {
-            if(i == 0) 
+            classrooms = classrooms.OrderBy(x => x.TimeToGate()).ToList();
+            if (i == 0) 
                 return 0;
             return classrooms[i - 1].ExitTime() + TotalTimeForFirst(i - 1);
         }
@@ -57,6 +57,7 @@ namespace ChuongTrinhChinh
         // Done
         public double TinhTGTrong(int a)
         {
+            classrooms = classrooms.OrderBy(x => x.TimeToGate()).ToList();
             double ThoiGianTrong = 0;
             for (int i = 1; i < a; i++)
             {
@@ -74,6 +75,7 @@ namespace ChuongTrinhChinh
         // Done
         public double ProcessingTime() {
             double ThoiGianXuLi = 0;
+            classrooms = classrooms.OrderBy(x => x.TimeToGate()).ToList();
             foreach (var classroom in classrooms)
                 ThoiGianXuLi += classroom.ExitTime();
             return ThoiGianXuLi + TinhTGTrong(classrooms.Count);
@@ -87,6 +89,7 @@ namespace ChuongTrinhChinh
         // Done
         public double WaitTime()
         {
+            classrooms = classrooms.OrderBy(x => x.TimeToGate()).ToList();
             double ThoiGianCho = 0;
             for(int i = 1; i < classrooms.Count; i++)
             {
