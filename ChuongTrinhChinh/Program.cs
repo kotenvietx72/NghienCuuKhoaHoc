@@ -16,7 +16,6 @@ namespace ChuongTrinhChinh
             List<ClassRoom> classRooms = XuLiDuLieu.readClassFromFile(); List<BatchScheduler> batchSchedulers = new List<BatchScheduler>();
             
             XuLiDuLieu.TimCacDotToiUu(batchSchedulers, classRooms);
-            XuLiDuLieu.TinhThoiGianTanHoc(batchSchedulers);
 
             foreach (BatchScheduler a in batchSchedulers)
             {
@@ -35,8 +34,6 @@ namespace ChuongTrinhChinh
                     Console.WriteLine($"Checking: Class {classroom.ClassName} - Dismissal Time: {classroom.DismissalTime}");
                 }
             }
-
-
         }
 
      }

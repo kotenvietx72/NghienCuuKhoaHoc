@@ -1,51 +1,51 @@
-Chủ nghĩa xã hội khoa học							DHOT17A1HN	5→6	67	H.A9-307
-Cơ lý thuyết										DHCD18A4HN	4→6	47	H.A9-404
-Điều khiển PLC và mạng truyền thông CN				DHCD16A1CL	4→6	27	H.A10-1107
-Động cơ đốt trong									DHOT17A3HN	5→6	55	H.A9-308
-Học máy												DHKL16A1HN	4→6	40	H.A10-101
-Kế toán doanh nghiệp								DHMK17A2HN	4→6	70	H.A8-405
-Kiến trúc máy tính - ĐT								DHDT18A1HN	4→6	55	H.A10-106
-Kinh tế chính trị Mác - Lênin						DHDT17A2HN	5→6	55	H.A10-1011
-Kinh tế chính trị Mác - Lênin						DHMT17A1CL	5→6	22	H.A10-1111
-Kỹ thuật mạch điện tử								DHDT18A1CL	4→6	22	H.A10-1203
-Kỹ thuật xung										DHDT17A1HN	5→6	64	H.A10-504
-Lập trình Robot với ROS								DHCD16A2HN	4→6	44	H.A9-301
-Lý thuyết mạch điện tử								DHKM17A1CL	4→6	33	H.A10-1109
-Mỹ thuật trang phục									DHMA18A3HN	4→6	46	H.A10-406
-Nghe 4												DHNN16A2HN	4→6	40	H.A9-304
-Ngôn ngữ mô tả phần cứng							DHDT16A1HN	4→6	23	H.A10-1008
-Ngôn ngữ mô tả phần cứng							DHDT16A1CL	4→6	1	H.A10-1008
-Nhập môn ngành công nghệ kỹ thuật ô tô				DHOT18A1CL	4→6	26	H.A10-1202
-Nói 1												DHNN18A3HN	4→6	41	H.A10-103
-Nói 4												DHNN16A1CL	4→6	23	H.A10-1104
-Phân tích tài chính doanh nghiệp					DHTN16A1HN	4→6	50	H.A9-306
-Quản trị bán hàng									DHMK17A1HN	4→6	65	H.A8-408
-Quản trị chiến lược									DHQT16A2HN	4→6	60	H.A8-406
-Quản trị chuỗi cung ứng								DHQT16A1HN	4→6	60	H.A8-404
-Quản trị kho										DHLQ16A1HN	4→6	38	H.A8-505
-Thanh toán quốc tế									DHTN16A1HN	4→6	45	H.A9-406
-Thiết bị may công nghiệp							DHMA18A1HN	4→6	50	H.A10-502
-Thiết kế và phát triển ứng dụng WEB					DHTI16A1HN	4→6	54	H.A9-401
-Thực hành Lập trình hướng đối tượng					DHKM17A1HN	1→6	30	H.A9-504
-Thực hành Lập trình hướng đối tượng					DHKM16A1HN	1→6	44	H.A9-603
-Thực hành nghiệp vụ kinh doanh XNK					DHTM16A3HN	1→6	33	H.A8-607
-Thực hành quản trị mạng								DHMT17A2HN	1→6	34	H.A9-505
-Thực hành quản trị mạng								DHTI16A3HN	1→6	30	H.A9-501
-Thực hành Quản trị marketing trong doanh nghiệp		DHMK16A1HN	1→6	32	H.A8-604
-Thực hành quản trị nhân lực							DHQT17A1HN	1→6	32	H.A8-606
-Thực hành quản trị nhân lực							DHQT17A2HN	1→6	26	H.A8-608
-Thực hành thuế										DHTN16A1CL	1→6	34	H.A8-601
-Thực tập lập trình cơ bản KHDL						DHKL18A1HN	1→6	33	H.A9-507
-Tiếng Anh 1											DHCD18A1HN	4→6	51	H.A9-207
-Tiếng Anh 1											DHLQ18A3HN	4→6	50	H.A10-108
-Tiếng Anh 1											DHQT18A4HN	4→6	51	H.A10-304
-Tiếng Anh 1											DHTI18A5HN	4→6	52	H.A8-201
-Tiếng Anh 3											DHCK17A2HN	4→6	49	H.A10-104
-Tiếng Anh 3											DHTN17A1CL	4→6	34	H.A10-1110
-Tiểu luận 1: Dự báo thị trường						DHTM16A2HN	5→6	32	H.A8-605
-Tiểu luận 1: Dự báo thị trường						DHTM16A2HN	4→6	39	H.A8-202
-Tin ứng dụng ngành quản trị kinh doanh				DHQT17A3HN	4→6	34	H.A9-608
-Tính toán máy gầm ô tô								DHOT16A1CL	5→6	29	H.A10-1103
-Triết học Mac - Lênin								DHTI18A1CL	4→6	35	H.A10-1204
-Viết 1												DHNN18A1HN	4→6	60	H.A10-102
-Xác suất thống kê									DHTI18A1HN	4→6	55	H.A9-201
+Chủ nghĩa xã hội khoa học							DHOT17A1HN	5->6	67	H.A9-307
+Cơ lý thuyết										DHCD18A4HN	2->6	47	H.A9-404
+Điều khiển PLC và mạng truyền thông CN				DHCD16A1CL	4->6	27	H.A10-1107
+Động cơ đốt trong									DHOT17A3HN	5->6	55	H.A9-308
+Học máy												DHKL16A1HN	4->6	40	H.A10-101
+Kế toán doanh nghiệp								DHMK17A2HN	4->6	70	H.A8-405
+Kiến trúc máy tính - ĐT								DHDT18A1HN	4->6	55	H.A10-106
+Kinh tế chính trị Mác - Lênin						DHDT17A2HN	5->6	55	H.A10-1011
+Kinh tế chính trị Mác - Lênin						DHMT17A1CL	5->6	22	H.A10-1111
+Kỹ thuật mạch điện tử								DHDT18A1CL	4->6	22	H.A10-1203
+Kỹ thuật xung										DHDT17A1HN	5->6	64	H.A10-504
+Lập trình Robot với ROS								DHCD16A2HN	4->6	44	H.A9-301
+Lý thuyết mạch điện tử								DHKM17A1CL	2->6	33	H.A10-1109
+Mỹ thuật trang phục									DHMA18A3HN	2->6	46	H.A10-406
+Nghe 4												DHNN16A2HN	4->6	40	H.A9-304
+Ngôn ngữ mô tả phần cứng							DHDT16A1HN	2->6	23	H.A10-1008
+Ngôn ngữ mô tả phần cứng							DHDT16A1CL	4->6	1	H.A10-1008
+Nhập môn ngành công nghệ kỹ thuật ô tô				DHOT18A1CL	4->6	26	H.A10-1202
+Nói 1												DHNN18A3HN	4->6	41	H.A10-103
+Nói 4												DHNN16A1CL	3->6	23	H.A10-1104
+Phân tích tài chính doanh nghiệp					DHTN16A1HN	3->6	50	H.A9-306
+Quản trị bán hàng									DHMK17A1HN	3->6	65	H.A8-408
+Quản trị chiến lược									DHQT16A2HN	3->6	60	H.A8-406
+Quản trị chuỗi cung ứng								DHQT16A1HN	3->6	60	H.A8-404
+Quản trị kho										DHLQ16A1HN	3->6	38	H.A8-505
+Thanh toán quốc tế									DHTN16A1HN	4->6	45	H.A9-406
+Thiết bị may công nghiệp							DHMA18A1HN	4->6	50	H.A10-502
+Thiết kế và phát triển ứng dụng WEB					DHTI16A1HN	4->6	54	H.A9-401
+Thực hành Lập trình hướng đối tượng					DHKM17A1HN	1->6	30	H.A9-504
+Thực hành Lập trình hướng đối tượng					DHKM16A1HN	1->6	44	H.A9-603
+Thực hành nghiệp vụ kinh doanh XNK					DHTM16A3HN	1->6	33	H.A8-607
+Thực hành quản trị mạng								DHMT17A2HN	1->6	34	H.A9-505
+Thực hành quản trị mạng								DHTI16A3HN	2->6	30	H.A9-501
+Thực hành Quản trị marketing trong doanh nghiệp		DHMK16A1HN	1->6	32	H.A8-604
+Thực hành quản trị nhân lực							DHQT17A1HN	1->6	32	H.A8-606
+Thực hành quản trị nhân lực							DHQT17A2HN	1->6	26	H.A8-608
+Thực hành thuế										DHTN16A1CL	1->6	34	H.A8-601
+Thực tập lập trình cơ bản KHDL						DHKL18A1HN	1->6	33	H.A9-507
+Tiếng Anh 1											DHCD18A1HN	4->6	51	H.A9-207
+Tiếng Anh 1											DHLQ18A3HN	4->6	50	H.A10-108
+Tiếng Anh 1											DHQT18A4HN	4->6	51	H.A10-304
+Tiếng Anh 1											DHTI18A5HN	4->6	52	H.A8-201
+Tiếng Anh 3											DHCK17A2HN	4->6	49	H.A10-104
+Tiếng Anh 3											DHTN17A1CL	4->6	34	H.A10-1110
+Tiểu luận 1: Dự báo thị trường						DHTM16A2HN	5->6	32	H.A8-605
+Tiểu luận 1: Dự báo thị trường						DHTM16A2HN	4->6	39	H.A8-202
+Tin ứng dụng ngành quản trị kinh doanh				DHQT17A3HN	4->6	34	H.A9-608
+Tính toán máy gầm ô tô								DHOT16A1CL	5->6	29	H.A10-1103
+Triết học Mac - Lênin								DHTI18A1CL	4->6	35	H.A10-1204
+Viết 1												DHNN18A1HN	4->6	60	H.A10-102
+Xác suất thống kê									DHTI18A1HN	4->6	55	H.A9-201

@@ -10,6 +10,7 @@ namespace ChuongTrinhChinh
     {
         public List<ClassRoom> classrooms { get; set; } = new List<ClassRoom>();                    // Danh sách các lớp 
         public DateTime DismissalTimeBatch { get; set; } = new DateTime(2025, 1, 1, 11, 35, 0);     // Thời gian tan học của một đợt
+        public double TimeCheck { get; set; }                                                       // Thời gian được xử lí
 
         private ClassInformation classInformation = XuLiDuLieu.readInforFromFile();
 
@@ -112,5 +113,6 @@ namespace ChuongTrinhChinh
                 return 0;
             return classrooms.Sum(c => c.StudentCount);
         }
+
     }
 }

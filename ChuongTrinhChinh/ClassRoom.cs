@@ -136,11 +136,11 @@ namespace ChuongTrinhChinh
         public int GetSessionCount() {
             return Session switch
             {
-                "1->6" => 6,
-                "2->6" => 5,
-                "3->6" => 4,
-                "4->6" => 3,
-                "5->6" => 2,
+                "1->6" or "7->12" => 6,
+                "2->6" or "8->12" => 5,
+                "3->6" or "9->12" => 4,
+                "4->6" or "10->12" => 3,
+                "5->6" or "11->12" => 2,
                 _ => 0
             };
         }
