@@ -215,6 +215,12 @@ namespace ChuongTrinhChinh
             }
         }
 
+        public static void AddNhom(List<BatchScheduler> bestBatchesCurrentRound, BatchScheduler NhomDangXet, BatchScheduler NhomDuocChon) {
+             bestBatchesCurrentRound.Clear();
+             bestBatchesCurrentRound.Add(NhomDangXet.DeepCopy());
+             NhomDuocChon.classrooms = NhomDangXet.DeepCopy().classrooms;
+        }
+        
         /// <summary>
         /// Hàm tìm các đợt tối ưu trong nhánh cận
         /// </summary>
@@ -293,20 +299,13 @@ namespace ChuongTrinhChinh
                 if ((NhomDangXet.Count_Student() >= GioiHanMinSinhVien && IsValidBatch(NhomDangXet) == 3 && CountBuilding(SelectedClasses) == 3) || (NhomDangXet.Count_Student() >= GioiHanMinSinhVien && IsValidBatch(NhomDangXet) == 2 && CountBuilding(SelectedClasses) == 2) || (NhomDangXet.Count_Student() >= GioiHanMinSinhVien && IsValidBatch(NhomDangXet) == 1 && CountBuilding(SelectedClasses) == 1))
                 {
                     // Nếu NhomDangXet có tỉ lệ thời gian xử lí/ tổng số lớp < đợt hiện tại => Lưu NhomDangXet thay thế bestBatches
-                    if (bestBatchesCurrentRound.Count == 0 || NhomDangXet.WaitTime() / NhomDangXet.classrooms.Count < bestBatchesCurrentRound.Last().WaitTime()/ bestBatchesCurrentRound.Last().classrooms.Count) {
-                        bestBatchesCurrentRound.Clear();
-                        bestBatchesCurrentRound.Add(NhomDangXet.DeepCopy());
-                        NhomDuocChon.classrooms = NhomDangXet.DeepCopy().classrooms;
-                    }
+                    if (bestBatchesCurrentRound.Count == 0 || NhomDangXet.WaitTime() / NhomDangXet.classrooms.Count < bestBatchesCurrentRound.Last().WaitTime()/ bestBatchesCurrentRound.Last().classrooms.Count)
+                           AddNhom(bestBatchesCurrentRound, NhomDangXet, NhomDuocChon);
                     // Nếu NhomDangXet có tỉ lệ thời gian xử lí/ tổng số lớp = đợt hiện tại => Xét tiếp thời gian xử lí
                     if (NhomDangXet.WaitTime() / NhomDangXet.classrooms.Count == bestBatchesCurrentRound.Last().WaitTime() / bestBatchesCurrentRound.Last().classrooms.Count)
                     {
                         if(NhomDangXet.ProcessingTime() / NhomDangXet.classrooms.Count < bestBatchesCurrentRound.Last().ProcessingTime() / bestBatchesCurrentRound.Last().classrooms.Count)
-                        {
-                            bestBatchesCurrentRound.Clear();
-                            bestBatchesCurrentRound.Add(NhomDangXet.DeepCopy());
-                            NhomDuocChon.classrooms = NhomDangXet.DeepCopy().classrooms;
-                        }
+                            AddNhom(bestBatchesCurrentRound, NhomDangXet, NhomDuocChon);
                     }
                     return;                                                             
                 }
