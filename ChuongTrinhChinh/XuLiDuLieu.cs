@@ -275,6 +275,11 @@ namespace ChuongTrinhChinh
                 if (NhomDangXet.Count_Student() > GioiHanMaxSinhVien)
                     return;
 
+                // Nếu nhánh hiện tại có thời gian đợi lớn hơn bestBatchesCurrentRound => cắt nhánh này luôn
+                if (bestBatchesCurrentRound.Count > 0 && NhomDangXet.WaitTime() > bestBatchesCurrentRound.Last().WaitTime()) {
+                    return;
+                }
+
                 if (CountStudent(SelectedClasses) < 240)
                 {
                     foreach (var classRoom in SelectedClasses)
@@ -305,6 +310,8 @@ namespace ChuongTrinhChinh
                     }
                     return;                                                             
                 }
+
+                
 
                 for (int i = index; i < SelectedClasses.Count; i++)                          // Duyệt qua tất cả các lớp trong danh sách
                 {
